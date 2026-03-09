@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json()); // allow us to accept JSON data in the req.body
 app.use("/api/products", productRoutes);
 
-app.listen(5000, () => {
+app.listen(process.env.PORT, () => {
   connectDB();
-  console.log("server started at localhost:5000");
+  console.log(`server started at localhost:${process.env.PORT}`);
 });
