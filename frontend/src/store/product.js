@@ -25,6 +25,17 @@ export const useProductStore = create((set) => ({
     const data = res.data;
     set({ products: data.data });
   },
+  deleteProduct: async (pid) => {
+    const res = await axios.delete(`api/products/${pid}`);
+    const data = res.data;
+    console.log(data);
+    if (!data.success) return { success: false, message: data.message };
+    set((state) => ({
+      products: state.products.filter((product) => product._id !== pid),
+    }));
+    return { success: true, message: data.message };
+  },
+  updateProduct: (pid) => {},
 }));
 
 //fetch-axios
