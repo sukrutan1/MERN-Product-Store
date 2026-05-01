@@ -35,7 +35,23 @@ export const useProductStore = create((set) => ({
     }));
     return { success: true, message: data.message };
   },
-  updateProduct: (pid) => {},
+  updateProduct: async (pid, updatedProduct) => {
+    const res = await axios.put(`api/products/${pid}`, {
+      _id: updatedProduct._id,
+      name: updatedProduct.name,
+      price: updatedProduct.price,
+      image: updatedProduct.image,
+    });
+    const data = res.data;
+    console.log(data);
+    if (!data.success) return { success: false, message: data.message };
+    set((state) => ({
+      products: state.products.map((product) =>
+        product._id === pid ? data.data : product,
+      ),
+    }));
+    return { success: true, message: data.message };
+  },
 }));
 
 //fetch-axios
